@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title> Jogo do Bicho Python/JS </title>
+    <style>
+        :root {
+            --primary: black;
+            --primary-dark: black;
+            --accent: blue;
+            --background: pink;
+            --card-bg: pink;
+            --text: black;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: var;
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        input {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            width: 60%;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .sorteio-num {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            color: #e65100;
+            margin: 15px 0;
+        }
+
+        .ganhou {
+            background-color: #e8f5e9;
+            border: 2px solid #2e7d32;
+            color: #1b5e20;
+        }
+
+        .perdeu {
+            background-color: #ffebee;
+            border: 2px solid #c62828;
+            color: #b71c1c;
+        }
+
+        .info-bichos {
+            margin-top: 30px;
+            text-align: left;
+            font-size: 14px;
+            background: #eee;
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>JOGO DO BICHO</h1>
+    <p class="subtitle">Insira o nome do bicho ou uma dezena (00 a 99)</p>
+
+    <div class="input-group">
+        <input type="text" id="apostaInput" placeholder="Ex: Macaco ou 65" autocomplete="off">
+        <button onclick="jogar()">Dar o Palpite!</button>
+    </div>
+
+    <div id="resultBox" class="result-box">
+        <div id="feedbackAposta"></div>
+        <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;">
+        <div>🔮 NÚMERO SORTEADO 🔮</div>
+        <div id="sorteioNum" class="sorteio-num">0000</div>
+        <div id="resultadoFinal" style="font-size: 18px; font-weight: bold;"></div>
+    </div>
+
+    <div class="info-bichos">
+        <strong>Tabela de Bichos Cadastrados:</strong>
+        <ul id="listaBichos" style="margin: 5px 0; padding-left: 20px;"></ul>
+    </div>
+</div>
+
+<script>
+    // Tabela idêntica à do Python
+    const tabelaBicho = {
+        "avestruz": ["01", "02", "03", "04"],
+    "aguia": ["05", "06", "07", "08"],
+    "burro": ["09", "10", "11", "12"],
+    "borboleta": ["13", "14", "15", "16"],
+    "cachorro": ["17", "18", "19", "20"],
+    "coelho": ["21", "22", "23", "24"],
+    "cavalo": ["25", "26", "27", "28"],
+    "elefante": ["29", "30", "31", "32"],
+    "cobra": ["33", "34", "35", "36"],
+    "galo": ["37", "38", "39", "40"],
+    "gato": ["41", "42", "43", "44"],
+    "jacare": ["45", "46", "47", "48"],
+    "lebre": ["49", "50", "51", "52"],
+    "urso": ["53", "54", "55", "56"],
+    "touro": ["57", "58", "59", "60"],
+    "leao": ["61", "62", "63", "64"],
+    "macaco": ["65", "66", "67", "68"],
+    "javali": ["69", "70", "71", "72"],
+    "porco": ["73", "74", "75", "76"],
+    "pavao": ["77", "78", "79", "80"],
+    "peru": ["81", "82", "83", "84"],
+    "tucano": ["85", "86", "87", "88"],
+    "urso": ["89", "90", "91", "92"],
+    "veado": ["93", "94", "95", "96"],
+    "vaca": ["97", "98", "99", "00"]
+    };
+
+    // Renderizar a lista de bichos na tela ao carregar
+    const listaBichosEl = document.getElementById("listaBichos");
+    for (let bicho in tabelaBicho) {
+        let li = document.createElement("li");
+        li.innerHTML = `<strong>${bicho.toUpperCase()}</strong>: ${tabelaBicho[bicho].join(', ')}`;
+        listaBichosEl.appendChild(li);
+    }
+
+    function jogar() {
+        const input = document.getElementById("apostaInput").value.toLowerCase().trim();
+        let bichoApostado = "";
+        let feedbackTexto = "";
+
+        if (!input) {
+            alert("Por favor, digite um bicho ou uma dezena!");
+            return;
+        }
+
+        // 1. Validação da Aposta (Igual à lógica Python)
+        if (tabelaBicho[input]) {
+            bichoApostado = input;
+            feedbackTexto = `💸 Você apostou no <strong>${bichoApostado.toUpperCase()}</strong>!`;
+        } else if (!isNaN(input) && input !== "") {
+            let dezenaDigitada = input.padStart(2, '0');
+            
+            for (let bicho in tabelaBicho) {
+                if (tabelaBicho[bicho].includes(dezenaDigitada)) {
+                    bichoApostado = bicho;
+                    break;
+                }
+            }
+
+            if (bichoApostado) {
+                feedbackTexto = `💸 Você apostou na dezena <strong>${dezenaDigitada}</strong> (${bichoApostado.toUpperCase()})`;
+            } else {
+                alert("❌ Essa dezena não pertence a nenhum bicho cadastrado. Tente outra!");
+                return;
+            }
+        } else {
+            alert("❌ Entrada inválida ou bicho não cadastrado. Tente de novo!");
+            return;
+        }
+
+        // 2. O Sorteio
+        let numeroSorteado = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        let dezenaSorteada = numeroSorteado.slice(-2);
+
+        // Descobre o bicho vencedor
+        let bichoVencedor = "Nenhum";
+        for (let bicho in tabelaBicho) {
+            if (tabelaBicho[bicho].includes(dezenaSorteada)) {
+                bichoVencedor = bicho;
+                break;
+            }
+        }
+
+        // 3. Atualizar a Interface do Usuário (UI)
+        const resultBox = document.getElementById("resultBox");
+        const feedbackAposta = document.getElementById("feedbackAposta");
+        const sorteioNum = document.getElementById("sorteioNum");
+        const resultadoFinal = document.getElementById("resultadoFinal");
+
+        feedbackAposta.innerHTML = feedbackTexto;
+        sorteioNum.innerText = `${numeroSorteado} (Dezena: ${dezenaSorteada})`;
+
+        resultBox.style.display = "block";
+        resultBox.className = "result-box"; // Limpa classes anteriores
+
+        if (bichoApostado === bichoVencedor) {
+            resultBox.classList.add("ganhou");
+            resultadoFinal.innerHTML = `🎉 DEU ${bichoVencedor.toUpperCase()}! Parabéns, você ganhou o prêmio máximo! 💰💰`;
+        } else {
+            resultBox.classList.add("perdeu");
+            resultadoFinal.innerHTML = `😢 DEU ${bichoVencedor.toUpperCase()}... Não foi dessa vez!`;
+        }
+    }
+</script>
+
+</body>

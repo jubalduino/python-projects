@@ -2,7 +2,7 @@
 
 Com mais de 15 anos de dedicação ao setor educacional como pedagoga e especialista em neuropsicologia, hoje canalizo essa bagagem para o universo da tecnologia. Estou em transição de carreira, unindo educação, ciência cognitiva e desenvolvimento de software para criar experiências de aprendizagem e interfaces digitais que sejam verdadeiramente inclusivas, funcionais e memoráveis.
 
-Atualmente, atuo como **LXd | Q.A.** e desenvolvedora em formação, aplicando conceitos de **Neurodesign** e **UX** na construção de soluções tecnológicas.
+Atualmente, atuo como **LXd | Q.A. | Dev**  aplicando conceitos de **Neurodesign** e **UX** na construção de soluções tecnológicas.
 
 ---
 
@@ -11,6 +11,7 @@ Atualmente, atuo como **LXd | Q.A.** e desenvolvedora em formação, aplicando c
 - 🎓 **Formação Base:** Graduada em Artes Visuais, Pedagoga e Especialista em Neuropsicologia.
 - 📚 **Estudando no momento:**
   - Análise de Dados com Python (MBA na USP-Esalq)
+  - Desenvolvimento de software (Senac)
   - Neurodesign na UNIFESP
   - User Experience na E.GV
 - 💡 **Áreas de Interesse:** Design Instrucional, Desenvolvimento Interfaces (UI/UX), Realidade Aumentada (AR) aplicada à educação/patrimônio histórico, e Gamificação.
@@ -20,7 +21,7 @@ Atualmente, atuo como **LXd | Q.A.** e desenvolvedora em formação, aplicando c
 
 ### 🛠️ Habilidades Técnicas & Ferramentas
 
-- **Linguagens & Frameworks:** Python (com foco em desenvolvimento de interfaces com **Flet** e análise de dados), SQL.
+- **Linguagens & Frameworks:** Python (com foco em desenvolvimento de interfaces com **Flet** e análise de dados), SQL, Html , Css, Figma.
 - **Design & Experiência:** UX/UI Design, Neurodesign, Design Instrucional (LXD), Arquitetura de Informação.
 - **Metodologias:** Documentação pedagógica, gamificação, acessibilidade cognitiva e design centrado no usuário.
 
@@ -45,6 +46,11 @@ Aqui estão algumas das soluções que desenvolvi unindo código, arte e psicolo
 *Projeto ficticio de sistema do jogo do bicho para brincar online
 -**Tecnologias:** Experiencia de jogo do bicho com foco na brincadeira 
 - **O que apliquei:** Python e design interface.
+
+### 🐍 Site Curadoria de cinemas
+*Projeto de preservação e divulgação do cinema em São Paulo*
+-**Tecnologias:** Pagina que redieciona para cada cinema,o site está compilando todos os sites de cinema num local só  
+- **O que apliquei:** Html e Css.
 
 ---
 
